@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add user</title>
+</head>
+<body>
+<h2>Add user</h2>
+<div>
+    <th:block th:include="menuPage">Menu</th:block>
+</div>
+<div>
+    <form th:action="@{/admin/add}" th:object="${userD}" method="post">
+        <fieldset>
+            <legend>user data</legend>
+            <p>
+                <label th:for="userName">userName</label>
+                <input type="text" name="userName" th:id="userName" th:value="${userD.getUsername()}">
+            </p>
+            <p>
+                <label th:for="email">email</label>
+                <input type="text" name="email" th:id="email" th:value="${userD.getEmail()}"><br/>
+            </p>
+            <p>
+                <label th:for="password">Password</label>
+                <input type="text" name="password" th:id="password" th:value="${userD.getPassword()}"><br/>
+            </p>
+            <p>
+                <label th:for="roleAdmin">Administrator</label>
+                <input type="checkbox" name="roleAdmin" th:id="roleAdmin" th:value=false><br/>
+            </p>
+
+        </fieldset>
+        <button type="submit">Save user</button>
+    </form>
+    <br/>
+    <form th:action="@{/admin/all}">
+        <button type="submit" class="btn btn-outline-danger">Back to the user list</button>
+    </form>
+</div>
+</body>
+</html>

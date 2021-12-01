@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit user</title>
+</head>
+<body>
+<h2>Edit user</h2>
+<div>
+    <th:block th:include="menuPage">Menu</th:block>
+</div>user_id
+<div>
+
+    <form th:action="@{/admin/edit}" th:object="${userMod}" method="post">
+        <input type="hidden" name="id" th:value="${userMod.getId()}">
+        <fieldset>
+            <legend>User data</legend>
+            <p>
+                <label th:for="userName">Name</label>
+                <input type="text" name="userName" th:id="userName" th:value="${userMod.getUsername()}">
+            </p>
+            <p>
+                <label th:for="email">Email</label>
+                <input type="text" name="email" th:id="email" th:value="${userMod.getEmail()}"><br/>
+            </p>
+            <p>
+                <label th:for="password">Password</label>
+                <input type="text" name="password" th:id="password" th:value="${userMod.getPassword()}"><br/>
+            </p>
+            
+            <p>
+                <label>
+                    <input type="checkbox"
+                           name="roleAdmin"
+                           th:checked="${roleAdmin}"
+                           th:text="Administrator">
+                </label>
+            </p>
+        </fieldset>
+        <button type="submit">Edit user</button>
+    </form>
+
+
+    <br/>
+    <form th:action="@{/admin/all}">
+        <button type="submit">Back to the user list</button>
+    </form>
+</div>
+</body>
+</html>
