@@ -32,15 +32,12 @@ public class AdminController {
         model.addAttribute("listUsers", userService.listUser());
         model.addAttribute("userThis", userService.loadUserByUsername(principal.getName()));
         model.addAttribute("roles",roleService.getListRole());
+        if (!model.containsAttribute("newUserAdd")) {
+            model.addAttribute("newUserAdd", new User());}
         return "users";
     }
 
-    @GetMapping(value = "/add")
-    public String newUserPage(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("user", user);
-        model.addAttribute("roles", roleService.getListRole());
-        return "addUser";
-    }
+
 
     @PostMapping("/newUser")
     public String createUser(@ModelAttribute("user") User user,@ModelAttribute("roles") String [] roles) {

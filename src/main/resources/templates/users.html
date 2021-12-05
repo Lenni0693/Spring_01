@@ -16,22 +16,42 @@
 <main>
     <div class="container-fluid">
         <div class="row">
-            <div class="p-0 col-2">
-                <div class="nav flex-column nav-pills pt-4" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" href="/admin" sec:authorize="hasAuthority('ROLE_ADMIN')" role="tab"
-                       aria-controls="v-pills-home" aria-selected="true">Admin</a>
-                    <a class="nav-link" href="/user" sec:authorize="(hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER'))"
-                       role="tab"
-                       aria-controls="v-pills-profile" aria-selected="false">User</a>
-                </div>
+            <div class="col-md-2 bg-white"
+                 style="padding-top: 20px;
+                        padding-left: 0px;
+                        padding-right: 0px;
+                        height: 100vh">
+
+                <!--навигация слева-->
+                <ul class="nav nav-pills flex-column">
+
+                    <div sec:authorize="hasAuthority('ROLE_USER')">
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="/user">User</a>
+                        </li>
+                    </div>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#Admin">Admin</a>
+                    </li>
+
+
+                </ul>
             </div>
-            <div class="col-10 px-0">
-                <div class="container-fluid">
-                    <h1 class="m-3 fw-bold">Admin panel</h1>
-                    <div class="tab-content" id="tabContent">
+            <div class="col-10 px-0"
+                 style="padding-top: 20px;
+                        height: 100vh">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="Admin">
+                        <h2 class="h2">Admin panel</h2>
                         <ul class="nav nav-tabs">
-                            <a class="nav-link active" data-toggle="tab">Users Table</a>
-                            <a class="nav-link" data-toggle="tab" href="/add">New user</a>
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#UsersTable">Users table</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#NewUser">New User</a>
+                            </li>
                         </ul>
 
                         <div class="tab-content">
@@ -209,6 +229,7 @@
                                                                     <button type="submit" class="btn btn-danger">Delete
                                                                     </button>
                                                                 </div>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -219,7 +240,45 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="tab-pane fade" id="NewUser">
+                                <div class="card">
+                                    <h5 class="card-header">Add new user</h5>
+                                    <div class="card-body text-center">
+                                        <div class="form justify-content-center mx-auto col-md-3">
+                                            <form th:action="@{/newUser}"
+                                                  th:object="${newUserAdd}"
+                                                  th:method="POST">
+                                                <label for="userName"><b>Username</b></label>
+                                                <input th:name="userName" th:type="text" class="form-control" id="userName" required/>
+                                                <br>
+                                                <label for="firstName"><b>First name</b></label>
+                                                <input th:name="firstName" th:type="text" class="form-control" id="firstName" required/>
+                                                <br>
+                                                <label for="lastName"><b>Last name</b></label>
+                                                <input th:name="lastName" th:type="text" class="form-control" id="lastName" required/>
+                                                <br>
+                                                <label for="age"><b>Age</b></label>
+                                                <input th:name="age" th:type="number" class="form-control" id="age"/>
+                                                <br>
+                                                <label for="email"><b>Email</b></label>
+                                                <input th:name="email" th:type="text" class="form-control" id="email" required/>
+                                                <br>
+                                                <label for="password"><b>Password</b></label>
+                                                <input th:name="password" th:type="password" class="form-control" id="password" required/>
+                                                <br>
+                                                <label for="roles2"><b>Role</b></label>
+                                                <select multiple class="form-control form-control-sm" id="roles2" name="roles" size="2" required>
+                                                    <option th:each="role: ${roles}" th:value="${role.getName()}" th:selected="${newUserAdd.getAuthorities().contains(role)}">
+                                                        <th:block th:text="${role.getName()}">
+                                                        </th:block>
+                                                    </option>
+                                                </select>
+                                                <button type="submit" class="btn btn-success">Add new user</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
