@@ -47,6 +47,12 @@ public class UserServiceImpl implements UserService {
 
     }
 
+
+    @Override
+    public User findByGoogleUsername(String email) {
+        return userD.findByGoogleUsername(email);
+    }
+
     @Override
     public User getUserByID(Long id) {
         return userD.findById(id).get();

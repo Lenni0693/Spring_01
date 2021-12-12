@@ -17,5 +17,6 @@ public interface UserService extends UserDetailsService {
 
     public User getUserByID(Long id);
 
+    public User findByGoogleUsername(String email);
 }
 
